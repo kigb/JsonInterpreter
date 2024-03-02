@@ -40,7 +40,7 @@ func Scan() {
 		tmp := Str_token{STRING, str}
 		var tmp_ele Element = tmp
 		JObject.Object_[current_key] = tmp_ele
-		println(current_key, ":", JObject.Object_[current_key].GetStringValue())
+		// println(current_key, ":", JObject.Object_[current_key].GetStringValue())
 		current_key = "" //reset the key
 
 	case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
@@ -52,7 +52,7 @@ func Scan() {
 		tmp := Num_token{NUMBER, num}
 		var tmp_ele Element = tmp
 		JObject.Object_[current_key] = tmp_ele
-		println(current_key, ":", JObject.Object_[current_key].GetNumValue())
+		// println(current_key, ":", JObject.Object_[current_key].GetNumValue())
 		current_key = "" //reset the key
 
 	case "t", "f":
@@ -64,7 +64,7 @@ func Scan() {
 		tmp := Bool_token{BOOLEAN, bool_cur}
 		var tmp_ele Element = tmp
 		JObject.Object_[current_key] = tmp_ele
-		println(current_key, ":", JObject.Object_[current_key].GetBoolValue())
+		// println(current_key, ":", JObject.Object_[current_key].GetBoolValue())
 		current_key = "" //reset the key
 
 	case "n", "N":
@@ -76,7 +76,19 @@ func Scan() {
 		tmp := Null_token{NULL, 0}
 		var tmp_ele Element = tmp
 		JObject.Object_[current_key] = tmp_ele
-		println(current_key, ":", JObject.Object_[current_key].GetNullValue())
+		// println(current_key, ":", JObject.Object_[current_key].GetNullValue())
+		current_key = "" //reset the key
+
+	case "[":
+		/* array */
+		if current_key == "" {
+			panic("No key is available, bad json format")
+		}
+		ary := get_array()
+		tmp := Array_token{BEGIN_ARRAY, ary}
+		var tmp_ele Element = tmp
+		JObject.Object_[current_key] = tmp_ele
+		// println(current_key, ":", JObject.Object_[current_key].GetElementValue())
 		current_key = "" //reset the key
 
 	}

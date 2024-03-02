@@ -88,3 +88,27 @@ func get_null() bool {
 		panic("Bad null format")
 	}
 }
+
+func get_array() []Element{
+	/* get the array from the source */
+	ans := make([]Element, 0)
+	for !is_eof(){
+		switch get_forward() {
+			case "]":
+				return ans
+			case "[":
+				ans = append(ans, Array_token{BEGIN_ARRAY, get_array()})//recursive call
+			case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+				ans = append(ans, Num_token{NUMBER, get_num()})
+			case "t", "f":
+				ans = append(ans, Bool_token{BOOLEAN, get_bool()})
+			case "n", "N":
+				get_null()
+				ans = append(ans, Null_token{NULL, 0})
+			case "\"":
+				ans = append(ans, Str_token{STRING, get_string()})	
+		}
+	}
+	
+	return ans
+}

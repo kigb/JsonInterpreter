@@ -13,27 +13,42 @@ func print_value_of_object(obj scanner.Json_object, key string) {
 		fmt.Println("No such key")
 		return
 	}
-	switch obj.Get_element(key).GetType() {
+	print_element(obj.Get_element(key))
+}
+
+func print_element(ele scanner.Element) {
+	/* print the value of the element */
+	switch ele.GetType() {
 	case scanner.NUMBER:
-		fmt.Println(obj.Get_element(key).GetNumValue())
+		fmt.Print(ele.GetNumValue())
 	case scanner.STRING:
-		fmt.Println(obj.Get_element(key).GetStringValue())
+		fmt.Print(ele.GetStringValue())
 	case scanner.BOOLEAN:
-		fmt.Println(obj.Get_element(key).GetBoolValue())
+		fmt.Print(ele.GetBoolValue())
 	case scanner.NULL:
-		fmt.Println("null")
+		fmt.Println("$null")
+	case scanner.BEGIN_ARRAY: //print the array
+		tmp := ele.GetElementValue()
+		fmt.Print("[")
+		for i := 0; i < len(tmp); i++ {
+			print_element(tmp[i])
+			if i != len(tmp)-1 {
+				fmt.Print(", ")
+			}
+		}
+		fmt.Print("]")
 	}
 }
 
 func main() {
 	content, err := os.ReadFile("json.txt")
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Println(string(content))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// fmt.Println(string(content))
 	scanner.Jsource = string(content)
 	scanner.J_length = len(scanner.Jsource)
 	scanner.Scan()
 	var JsonObject scanner.Json_object = scanner.JObject
-	print_value_of_object(JsonObject, "123sd4")
+	print_value_of_object(JsonObject, "aaa")
 }
