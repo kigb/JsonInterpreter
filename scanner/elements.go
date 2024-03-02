@@ -7,6 +7,7 @@ type Element interface{
 	GetNumValue() float64
 	GetBoolValue() bool
 	GetNullValue() int
+	GetElementValue() []Element
 }
 
 /* STR */
@@ -35,6 +36,10 @@ func (s Str_token)GetNullValue() int{//unused, return 0
 	return 0
 }
 
+func (s Str_token)GetElementValue() []Element{//unused, return nil
+	return nil
+}
+
 /* NUM */
 type Num_token struct {
 	Token_type int
@@ -61,6 +66,9 @@ func (n Num_token)GetNullValue() int{//unused, return 0
 	return 0
 }
 
+func (n Num_token)GetElementValue() []Element{//unused, return nil
+	return nil
+}
 /* BOOL */
 type Bool_token struct {
 	Token_type int
@@ -87,6 +95,9 @@ func (b Bool_token)GetNullValue() int{//unused, return 0
 	return 0
 }
 
+func (b Bool_token)GetElementValue() []Element{//unused, return nil
+	return nil
+}
 
 /* NULL */
 type Null_token struct {
@@ -112,4 +123,42 @@ func (n Null_token)GetBoolValue() bool{//unused, return false
 
 func (n Null_token)GetNullValue() int{// return the null value
 	return 0
+}
+
+func (n Null_token)GetElementValue() []Element{//unused, return nil
+	return nil
+}
+
+/* ARRAY */
+type Array_token struct {
+	Token_type int
+	Value []Element
+}
+
+func (a Array_token)GetType() int{
+	return a.Token_type
+}
+
+func (a Array_token)GetElementValue() []Element{// return the array value
+	return a.Value
+}
+
+func (a Array_token)GetStringValue() string{//unused, return ""
+	return ""
+}
+
+func (a Array_token)GetNumValue() float64{//unused, return 0
+	return 0
+}
+
+func (a Array_token)GetBoolValue() bool{//unused, return false
+	return false
+}
+
+func (a Array_token)GetNullValue() int{//unused, return 0
+	return 0
+}
+
+func (a Array_token)GetArrayValue() []Element{// return the array value
+	return a.Value
 }
