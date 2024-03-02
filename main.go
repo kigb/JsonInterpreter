@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"JsonInterpreter/judger"
 )
 
 func print_value_of_object(obj scanner.Json_object, key string) {
@@ -46,7 +47,11 @@ func main() {
 		log.Fatal(err)
 	}
 	// fmt.Println(string(content))
+
 	scanner.Jsource = string(content)
+	if !judger.JsonValid(scanner.Jsource){
+		panic ("Bad json format")
+	}//optional, judge the json format
 	scanner.J_length = len(scanner.Jsource)
 	scanner.Scan()
 	var JsonObject scanner.Json_object = scanner.JObject
