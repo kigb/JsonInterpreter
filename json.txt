@@ -1,0 +1,5 @@
+{   
+    "1234":1.234,
+    "dcscdsa":"dsad",
+    "bool":true
+}
