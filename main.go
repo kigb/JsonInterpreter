@@ -59,6 +59,20 @@ func print_element(ele scanner.Element) {
 
 }
 
+func print_all_elements(o scanner.Object){
+	/* print all the elements in the object */
+	fmt.Println("{")
+	for k, v := range o.Object_ {
+		fmt.Print("\t")
+		fmt.Print(k, ": ")
+		print_element(v)
+		fmt.Print(",")
+		fmt.Println("")
+	}
+	fmt.Print("}")
+
+}
+
 func main() {
 	content, err := os.ReadFile("json.txt")
 	if err != nil {
@@ -72,6 +86,7 @@ func main() {
 	} //optional, judge the json format
 	scanner.J_length = len(scanner.Jsource)
 	scanner.Scan()
-	var JsonObject scanner.Json_object = scanner.JObject[0]
-	print_value_of_object(JsonObject, "bbb")
+	// var JsonObject scanner.Json_object = scanner.JObject[0]
+	// print_value_of_object(JsonObject, "aaa")
+	print_all_elements(scanner.JObject[0])
 }

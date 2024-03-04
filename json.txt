@@ -1,4 +1,5 @@
 {   
     "aaa":{"a":true,"b":"sdad"},
-    "bbb":[{"a":true,"b":"sdad"},"dsa"]
+    "bbb":[[1,2,3,true],"dsa"],
+    "ccc":{"ddd":[1,2,3]}
 }
