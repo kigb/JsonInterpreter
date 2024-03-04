@@ -1,11 +1,11 @@
 package main
 
 import (
+	"JsonInterpreter/judger"
 	"JsonInterpreter/scanner"
 	"fmt"
 	"log"
 	"os"
-	"JsonInterpreter/judger"
 )
 
 func print_value_of_object(obj scanner.Json_object, key string) {
@@ -30,15 +30,33 @@ func print_element(ele scanner.Element) {
 		fmt.Println("$null")
 	case scanner.BEGIN_ARRAY: //print the array
 		tmp := ele.GetElementValue()
+		// print(len(tmp))
 		fmt.Print("[")
 		for i := 0; i < len(tmp); i++ {
+			// print(tmp[i].GetType())
 			print_element(tmp[i])
 			if i != len(tmp)-1 {
 				fmt.Print(", ")
 			}
 		}
 		fmt.Print("]")
+	case scanner.BEGIN_OBJECT: //print the object
+		tmp := ele.GetObjectValue()
+		fmt.Print("{")
+		i := 0
+		length := len(tmp.Object_)
+		for k, v := range tmp.Object_ {
+			i = i + 1
+			fmt.Print(k, ": ")
+			print_element(v)
+			if condition := i == length; condition {
+				break
+			}
+			fmt.Print(", ")
+		}
+		fmt.Print("}")
 	}
+
 }
 
 func main() {
@@ -49,11 +67,11 @@ func main() {
 	// fmt.Println(string(content))
 
 	scanner.Jsource = string(content)
-	if !judger.JsonValid(scanner.Jsource){
-		panic ("Bad json format")
-	}//optional, judge the json format
+	if !judger.JsonValid(scanner.Jsource) {
+		panic("Bad json format")
+	} //optional, judge the json format
 	scanner.J_length = len(scanner.Jsource)
 	scanner.Scan()
-	var JsonObject scanner.Json_object = scanner.JObject
-	print_value_of_object(JsonObject, "aaa")
+	var JsonObject scanner.Json_object = scanner.JObject[0]
+	print_value_of_object(JsonObject, "bbb")
 }

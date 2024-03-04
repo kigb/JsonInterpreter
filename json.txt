@@ -1,6 +1,4 @@
 {   
-    "1234":1.234,
-    "dcscdsa":"dsad",
-    "bool":true,
-    "aaa":[1,"sda",234,5,[1,2,3]]
+    "aaa":{"a":true,"b":"sdad"},
+    "bbb":[{"a":true,"b":"sdad"},"dsa"]
 }

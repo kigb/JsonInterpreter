@@ -6,6 +6,7 @@ type Json_object interface{
 
 type Object struct{
 	Object_ map[string]Element
+	Token_type int
 }
 
 func (o Object)Get_element(str string) Element{

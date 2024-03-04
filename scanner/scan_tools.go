@@ -6,6 +6,9 @@ import (
 
 func get_forward() string {
 	current_ = current_ + 1
+	if is_eof() {
+		return ""
+	}
 	return string(Jsource[current_])
 }
 
@@ -106,7 +109,15 @@ func get_array() []Element{
 				get_null()
 				ans = append(ans, Null_token{NULL, 0})
 			case "\"":
-				ans = append(ans, Str_token{STRING, get_string()})	
+				ans = append(ans, Str_token{STRING, get_string()})
+			case "{":
+				// current_  = current_-1
+				// pre_index:=current_object_index
+				// current_object_index = len(JObject)
+				// JObject = append(JObject, Object{make(map[string]Element), BEGIN_OBJECT})
+				// cur_object:=Scan()	
+				// current_object_index = pre_index
+				// ans = append(ans, cur_object)
 		}
 	}
 	
