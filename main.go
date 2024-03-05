@@ -8,14 +8,14 @@ import (
 	"os"
 )
 
-func print_value_of_object(obj scanner.Json_object, key string) {
-	/* get the value of the key in the object */
-	if obj.Get_element(key) == nil {
-		fmt.Println("No such key")
-		return
-	}
-	print_element(obj.Get_element(key))
-}
+// func print_value_of_object(obj scanner.Json_object, key string) {
+// 	/* get the value of the key in the object */
+// 	if obj.Get_element(key) == nil {
+// 		fmt.Println("No such key")
+// 		return
+// 	}
+// 	print_element(obj.Get_element(key))
+// }
 
 func print_element(ele scanner.Element) {
 	/* print the value of the element */
@@ -88,6 +88,7 @@ func main() {
 	scanner.Scan()
 	// var JsonObject scanner.Json_object = scanner.JObject[0]
 	// print_value_of_object(JsonObject, "aaa")
+
 	if(scanner.JArray!=nil){
 		fmt.Print("[")
 		for i:=0;i<len(scanner.JArray);i++{
