@@ -1,4 +1,5 @@
 package scanner
+
 /* tools for scanning */
 import (
 	"strconv"
@@ -92,34 +93,37 @@ func get_null() bool {
 	}
 }
 
-func get_array() []Element{
+func get_array() []Element {
 	/* get the array from the source */
 	ans := make([]Element, 0)
-	for !is_eof(){
+	for !is_eof() {
 		switch get_forward() {
-			case "]":
-				return ans
-			case "[":
-				ans = append(ans, Array_token{BEGIN_ARRAY, get_array()})//recursive call
-			case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
-				ans = append(ans, Num_token{NUMBER, get_num()})
-			case "t", "f":
-				ans = append(ans, Bool_token{BOOLEAN, get_bool()})
-			case "n", "N":
-				get_null()
-				ans = append(ans, Null_token{NULL, 0})
-			case "\"":
-				ans = append(ans, Str_token{STRING, get_string()})
-			case "{":
-				// current_  = current_-1
-				// pre_index:=current_object_index
-				// current_object_index = len(JObject)
-				// JObject = append(JObject, Object{make(map[string]Element), BEGIN_OBJECT})
-				// cur_object:=Scan()	
-				// current_object_index = pre_index
-				// ans = append(ans, cur_object)
+		case "]":
+			return ans
+		case "[":
+			ans = append(ans, Array_token{BEGIN_ARRAY, get_array()}) //recursive call
+		case "1", "2", "3", "4", "5", "6", "7", "8", "9", "0":
+			ans = append(ans, Num_token{NUMBER, get_num()})
+		case "t", "f":
+			ans = append(ans, Bool_token{BOOLEAN, get_bool()})
+		case "n", "N":
+			get_null()
+			ans = append(ans, Null_token{NULL, 0})
+		case "\"":
+			ans = append(ans, Str_token{STRING, get_string()})
+		case "{":
+			current_ = current_ - 1
+			pre_index := current_object_index
+			re_current_key := current_key
+			current_key = ""
+			isFatherObject = true
+			cur_object := Scan_object()
+			current_key = re_current_key
+			isFatherObject = false
+			current_object_index = pre_index
+			ans = append(ans, cur_object)
 		}
 	}
-	
+
 	return ans
 }

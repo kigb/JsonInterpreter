@@ -10,20 +10,22 @@ var current_object_index = -1            //current index of the object
 // var key = true          //to judge whether is the key, before : is key, after : is value
 var current_key = "" //to store the current key
 var isFatherObject = true
+var JArray []Element = make([]Element, 0)
 
-func Scan() Object{
+func Scan_object() Object {
 	if is_eof() {
 		return Object{}
 	}
 
 	cur_str := get_forward()
 
-	if cur_str == "{" && current_ == 0 {
+	if cur_str == "{" && isFatherObject {
 		isFatherObject = false
 		JObject = append(JObject, Object{make(map[string]Element), BEGIN_OBJECT})
 		current_object_index = current_object_index + 1
 		JObject[current_object_index].Object_ = make(map[string]Element) //initialize the map
-		Scan()
+		Scan_object()
+		isFatherObject = true //restart
 		return JObject[current_object_index]
 	}
 	/* judge whether in object */
@@ -44,7 +46,7 @@ func Scan() Object{
 		}
 		save_cur_key := current_key
 		current_key = ""
-		Scan() //recursive call,get the obj
+		Scan_object() //recursive call,get the obj
 		JObject[pre_index].Object_[save_cur_key] = JObject[pre_index+1]
 		current_key = ""
 		current_object_index = pre_index
@@ -115,6 +117,32 @@ func Scan() Object{
 		current_key = "" //reset the key
 
 	}
-	Scan()
+	Scan_object()
 	return JObject[current_object_index]
+}
+
+func Scan_array() {
+	if is_eof() {
+		return
+	}
+
+	cur_str := get_forward()
+
+	if cur_str == "[" {
+		JArray = get_array()
+	}
+
+}
+
+func Scan(){
+	if(J_length == 0){
+		panic("No source string")
+	}
+
+	if(string(Jsource[0]) == "["){
+		Scan_array()
+	}
+	if(string(Jsource[0]) == "{"){
+		Scan_object()
+	}
 }

@@ -88,5 +88,19 @@ func main() {
 	scanner.Scan()
 	// var JsonObject scanner.Json_object = scanner.JObject[0]
 	// print_value_of_object(JsonObject, "aaa")
-	print_all_elements(scanner.JObject[0])
+	if(scanner.JArray!=nil){
+		fmt.Print("[")
+		for i:=0;i<len(scanner.JArray);i++{
+			print_element(scanner.JArray[i])
+			if i!=len(scanner.JArray)-1{
+				fmt.Print(", ")
+			}
+		}
+		fmt.Print("]")
+		return
+	}
+	if(scanner.J_length!=0){
+		print_all_elements(scanner.JObject[0])
+	}
+	
 }
